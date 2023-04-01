@@ -9,6 +9,7 @@ class Entry {
   final String type;
   final int size;
   final int timestamp;
+  final String hash;
   final String url;
 
   // Default constructor
@@ -18,6 +19,7 @@ class Entry {
     required this.type,
     required this.size,
     required this.timestamp,
+    required this.hash,
     required this.url,
   });
 
@@ -29,6 +31,7 @@ class Entry {
       name: FileUtils.getName(fullName),
       type: FileUtils.getExtension(fullName),
       size: FileUtils.getSize(file),
+      hash: FileUtils.getHash(file),
       timestamp: FileUtils.getTimestamp(file),
       url: '${Config.kHostPath}$fullName',
     );
@@ -41,6 +44,7 @@ class Entry {
         'type': type,
         'size': size,
         'timestamp': timestamp,
+        'hash': hash,
         'url': url,
       };
 }
