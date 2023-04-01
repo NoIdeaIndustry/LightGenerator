@@ -14,7 +14,7 @@ String _filesGenerationLogic(final Directory folder) {
   final entries = List.empty(growable: true);
   for (final file in folder.listSync()) {
     if (file is File) {
-      entries.add(Entry.fromFile(file));
+      entries.add(Entry.fromFile(file).toJson());
     }
   }
 

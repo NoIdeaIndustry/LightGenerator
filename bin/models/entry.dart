@@ -33,4 +33,14 @@ class Entry {
       url: '${Config.kHostPath}$fullName',
     );
   }
+
+  // Create a json from 'Entry' object
+  Map<String, dynamic> toJson() => {
+        'fullname': fullname,
+        'name': name,
+        'type': type,
+        'size': size,
+        'timestamp': timestamp,
+        'url': url,
+      };
 }
