@@ -9,7 +9,7 @@ void main() {
   _fileCreationLogic(directory, _filesGenerationLogic(directory));
 }
 
-// generate json from files in folder
+// Generate json from files in folder
 String _filesGenerationLogic(final Directory folder) {
   final entries = List.empty(growable: true);
   for (final file in folder.listSync()) {
@@ -21,7 +21,7 @@ String _filesGenerationLogic(final Directory folder) {
   return jsonEncode(entries);
 }
 
-// generate file inside folder from json
+// Generate file inside folder from json
 void _fileCreationLogic(final Directory folder, final String json) {
   final directory = Directory('${folder.path}/generated');
   directory.createSync();
@@ -32,7 +32,7 @@ void _fileCreationLogic(final Directory folder, final String json) {
   print('File generated in: ${file.path}');
 }
 
-// check availability + get directory
+// Check availability + get directory
 Directory _getDirectory() {
   final directory = Directory('${Directory.current.path}${Config.kFolderPath}');
   if (!directory.existsSync()) {

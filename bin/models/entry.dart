@@ -11,6 +11,7 @@ class Entry {
   final int timestamp;
   final String url;
 
+  // Default constructor
   Entry({
     required this.fullname,
     required this.name,
@@ -20,6 +21,7 @@ class Entry {
     required this.url,
   });
 
+  // Custom constructor from file
   factory Entry.fromFile(final File file) {
     final fullName = FileUtils.getFullname(file);
     return Entry(
