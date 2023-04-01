@@ -16,22 +16,22 @@ class FileUtils {
     return hash.toString();
   }
 
-  // Get the file's size
+  // Get the file size
   static int getSize(final File file) {
     return file.statSync().size;
   }
 
-  // Get the file's name without extension
+  // Get the file name without extension
   static String getName(final String fileName) {
     return path.basenameWithoutExtension(fileName);
   }
 
-  // Get the file's extension only
+  // Get the file extension only
   static String getExtension(final String fileName) {
     return path.extension(fileName);
   }
 
-  // Get the file's name from full path
+  // Get the file name from full path
   static String getFullname(final File file) {
     return file.path.split('/').last.substring(6);
   }
