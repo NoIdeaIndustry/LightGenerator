@@ -14,7 +14,7 @@ class Config {
 void main() {
   final localDir = Directory(Directory.current.path);
 
-  // gets the supposed folder to look for files you want to generate data from
+  // get the supposed folder to look for files you want to generate data from
   final folderDir = Directory('${localDir.path}${Config.kFolderPath}');
   if (!folderDir.existsSync()) {
     print("Specified folder not found... Aborting!");
@@ -37,11 +37,14 @@ void main() {
     }
   }
 
+  // encode the entries in a json file
   final json = jsonEncode(generatedEntries);
 
+  // create a special folder to hold the generated file
   final generatedDir = Directory('${folderDir.path}/generated');
   generatedDir.createSync();
 
+  // generate the final file inside the special folder
   final generatedFile = File('${generatedDir.path}/generated.json');
   generatedFile.writeAsStringSync(json);
 
