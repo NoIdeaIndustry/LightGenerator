@@ -4,6 +4,7 @@ import '../utils/config.dart';
 import '../utils/file_utils.dart';
 
 class Entry {
+  final String platform;
   final String fullname;
   final String name;
   final String type;
@@ -14,6 +15,7 @@ class Entry {
 
   // Default constructor
   Entry({
+    required this.platform,
     required this.fullname,
     required this.name,
     required this.type,
@@ -26,19 +28,23 @@ class Entry {
   // Custom constructor from file
   factory Entry.fromFile(final File file) {
     final fullName = FileUtils.getFullname(file);
+    final platform = FileUtils.getPlatform(fullName);
     return Entry(
-      fullname: FileUtils.getFullname(file),
+      platform: platform,
+      fullname: fullName.replaceAll('$platform\\', ''),
       name: FileUtils.getName(fullName),
       type: FileUtils.getExtension(fullName),
       size: FileUtils.getSize(file),
       hash: FileUtils.getHash(file),
       timestamp: FileUtils.getTimestamp(file),
-      url: '${Config.kHostPath}$fullName',
+      url: '${Config.kHostPath}${Config.kFolderPath}/$fullName'
+          .replaceAll('\\', '/'),
     );
   }
 
   // Create a json from 'Entry' object
   Map<String, dynamic> toJson() => {
+        'platform': platform,
         'fullname': fullname,
         'name': name,
         'type': type,

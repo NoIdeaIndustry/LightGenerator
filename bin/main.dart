@@ -3,30 +3,38 @@ import 'dart:io';
 
 import 'models/entry.dart';
 import 'utils/config.dart';
+import 'utils/platform.dart';
 
 void main() {
-  final directory = _getDirectory();
-  _fileCreationLogic(directory, _filesGenerationLogic(directory));
+  final local = _getDirectory();
+
+  // logic to generate for x supported platform
+  for (final supported in Platform.available) {
+    final platform = supported.folder;
+    final directory = Directory('${local.path}/$platform');
+    final json = _filesGenerationLogic(directory, platform);
+    _fileCreationLogic(directory.parent.parent, platform, json);
+  }
 }
 
 // Generate json from files in folder
-String _filesGenerationLogic(final Directory folder) {
+String _filesGenerationLogic(final Directory folder, final String platform) {
+  if (!folder.existsSync()) {
+    throw ("No folder found... Create the folder or remove the specif platform!");
+  }
+
   final entries = List.empty(growable: true);
   for (final file in folder.listSync()) {
-    if (file is File) {
-      entries.add(Entry.fromFile(file).toJson());
-    }
+    entries.add((Entry.fromFile(file as File).toJson()));
   }
 
   return jsonEncode(entries);
 }
 
 // Generate file inside folder from json
-void _fileCreationLogic(final Directory folder, final String json) {
-  final directory = Directory('${folder.path}/generated');
-  directory.createSync();
-
-  final file = File('${directory.path}/generated.json');
+void _fileCreationLogic(
+    final Directory folder, final String platform, final String json) {
+  final file = File('${folder.path}/$platform/$platform.json');
   file.writeAsStringSync(json);
 
   print('File generated in: ${file.path}');

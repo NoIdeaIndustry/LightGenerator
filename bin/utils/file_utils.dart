@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart' as path;
 
+import 'platform.dart';
+
 class FileUtils {
   // Get last file modification timestamp
   static int getTimestamp(final File file) {
@@ -14,6 +16,17 @@ class FileUtils {
     final bytes = file.readAsBytesSync();
     final hash = sha256.convert(bytes);
     return hash.toString();
+  }
+
+  // Get the file platform from path
+  static String getPlatform(final String fullName) {
+    for (final platform in Platform.available) {
+      if (fullName.contains(platform.name)) {
+        return fullName.substring(0, platform.name.length);
+      }
+    }
+
+    return 'unknown';
   }
 
   // Get the file size
@@ -33,6 +46,6 @@ class FileUtils {
 
   // Get the file name from full path
   static String getFullname(final File file) {
-    return file.path.split('/').last.substring(6);
+    return file.path.split('/').last;
   }
 }
