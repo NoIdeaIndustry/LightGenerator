@@ -7,22 +7,16 @@ import '../utils/file_utils.dart';
 
 class Entry {
   final String platform;
-  final String fullname;
-  final String name;
-  final String type;
+  final String file;
   final int size;
-  final int timestamp;
   final String hash;
   final String url;
 
   // Default constructor
   Entry({
     required this.platform,
-    required this.fullname,
-    required this.name,
-    required this.type,
+    required this.file,
     required this.size,
-    required this.timestamp,
     required this.hash,
     required this.url,
   });
@@ -33,12 +27,9 @@ class Entry {
     final platform = FileUtils.getPlatform(fullName);
     return Entry(
       platform: platform,
-      fullname: fullName.replaceAll('$platform\\', ''),
-      name: FileUtils.getName(fullName),
-      type: FileUtils.getExtension(fullName),
+      file: fullName.replaceAll('$platform\\', '').replaceAll('\\', '/'),
       size: FileUtils.getSize(file),
       hash: FileUtils.getHash(file),
-      timestamp: FileUtils.getTimestamp(file),
       url: '${Config.kHostPath}${Config.kFolderPath}/$fullName'
           .replaceAll('\\', '/'),
     );
@@ -63,11 +54,8 @@ class Entry {
   // Create a json from 'Entry' object
   Map<String, dynamic> toJson() => {
         'platform': platform,
-        'fullname': fullname,
-        'name': name,
-        'type': type,
+        'file': file,
         'size': size,
-        'timestamp': timestamp,
         'hash': hash,
         'url': url,
       };

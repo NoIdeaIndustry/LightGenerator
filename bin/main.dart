@@ -27,21 +27,12 @@ String _filesGenerationLogic(final Directory folder, final String platform) {
   final entries = List.empty(growable: true);
   for (final file in folder.listSync()) {
     if (file is Directory) {
-      print(file.path);
       final files = FileUtils.getFilesInDirectory(file);
 
       for (final dirFile in files) {
         entries.add((Entry.fromFile(dirFile).toJson()));
       }
-    }
-    /*if (file.path.contains('.zip')) {
-      final files = FileUtils.unpackArchive(file as File);
-
-      for (final archiveFile in files) {
-        entries.add((Entry.fromArchiveFile(file.path, archiveFile).toJson()));
-      }
-    }*/
-    else {
+    } else {
       entries.add((Entry.fromFile(file as File).toJson()));
     }
   }
