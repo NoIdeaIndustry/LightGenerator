@@ -2,11 +2,16 @@
 
 A Dart script that helps generate a JSON file for self-updating software. The JSON file contains data such as the file name, file type extension, hash, size, last modified timestamp, and a URL linked to the owner's host where the file is located and can be downloaded from.
 
+## Prerequisites
+
+The script is supported for any dart sdk within version 2.19.4 and 3.0.0.<br>
+To install the dart sdk, please follow the respective instructions for your platform at https://dart.dev/get-dart.
+
 ## Usage
 
 The script can be run using the Dart SDK. To generate a JSON file, simply run the script and it will scan the folder specified in the `kFolderPath` variable in the `Config` class for files to include in the JSON file. The `kHostPath` variable in the `Config` class specifies the URL where the file can be downloaded from.
 
-To run the script, navigate to the project folder and run the following command:
+To run the script, navigate to the project folder 'bin' and run the following command:
 ```dart
 dart main.dart
 ```
