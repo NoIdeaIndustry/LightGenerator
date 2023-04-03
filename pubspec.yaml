@@ -7,6 +7,7 @@ environment:
 dependencies:
    crypto: ^3.0.2
    path: ^1.8.3
+   archive: ^3.1.2
 
 dev_dependencies:
   lints: ^2.0.0

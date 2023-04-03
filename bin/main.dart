@@ -3,15 +3,16 @@ import 'dart:io';
 
 import 'models/entry.dart';
 import 'utils/config.dart';
+import 'utils/file_utils.dart';
 import 'utils/platform.dart';
 
 void main() {
   final local = _getDirectory();
 
   // logic to generate for x supported platform
-  for (final supported in Platform.available) {
-    final platform = supported.folder;
-    final directory = Directory('${local.path}/$platform');
+  for (final supported in Platform.availablePlatforms) {
+    final platform = supported.name;
+    final directory = Directory('${local.path}\\$platform');
     final json = _filesGenerationLogic(directory, platform);
     _fileCreationLogic(directory.parent.parent, platform, json);
   }
@@ -20,12 +21,29 @@ void main() {
 // Generate json from files in folder
 String _filesGenerationLogic(final Directory folder, final String platform) {
   if (!folder.existsSync()) {
-    throw ("No folder found... Create the folder or remove the specif platform!");
+    throw ("No folder found... Create the folder or remove the specific platform!");
   }
 
   final entries = List.empty(growable: true);
   for (final file in folder.listSync()) {
-    entries.add((Entry.fromFile(file as File).toJson()));
+    if (file is Directory) {
+      print(file.path);
+      final files = FileUtils.getFilesInDirectory(file);
+
+      for (final dirFile in files) {
+        entries.add((Entry.fromFile(dirFile).toJson()));
+      }
+    }
+    /*if (file.path.contains('.zip')) {
+      final files = FileUtils.unpackArchive(file as File);
+
+      for (final archiveFile in files) {
+        entries.add((Entry.fromArchiveFile(file.path, archiveFile).toJson()));
+      }
+    }*/
+    else {
+      entries.add((Entry.fromFile(file as File).toJson()));
+    }
   }
 
   return jsonEncode(entries);
