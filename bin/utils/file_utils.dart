@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
-import 'package:path/path.dart' as path;
 
 import 'platform.dart';
 
