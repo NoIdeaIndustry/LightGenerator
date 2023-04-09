@@ -4,4 +4,3 @@
 .vscode
 
 bootstrap/*
-bin/utils/config.dart
